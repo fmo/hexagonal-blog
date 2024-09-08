@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"github.com/fmo/hexagonal-blog/config"
 	"github.com/fmo/hexagonal-blog/internal/adapters/db/mysql"
 	"github.com/fmo/hexagonal-blog/internal/adapters/rest"
@@ -24,6 +25,8 @@ func main() {
 		}
 	}
 
+	ctx := context.Background()
+
 	dbAdapter, err := mysql.NewAdapter(config.GetDataSourceURL())
 	if err != nil {
 		log.Fatalf("Failed to connect to database. Error: %v", err)
@@ -31,5 +34,5 @@ func main() {
 
 	application := api.NewApplication(dbAdapter)
 	restAdapter := rest.NewAdapter(application, config.GetApplicationPort())
-	restAdapter.Run()
+	restAdapter.Run(ctx)
 }
