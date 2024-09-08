@@ -20,13 +20,7 @@ func NewAdapter(api ports.APIPorts, port int) *Adapter {
 	return &Adapter{api: api, port: port}
 }
 
-type Response struct {
-	Message domain.Post `json:"message"`
-	Status  int         `json:"status"`
-}
-
 func (a Adapter) Run(ctx context.Context) {
-
 	http.HandleFunc("/posts", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
 			http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -76,4 +70,9 @@ func (a Adapter) Run(ctx context.Context) {
 	if err != nil {
 		log.Panic(err)
 	}
+}
+
+type Response struct {
+	Message domain.Post `json:"message"`
+	Status  int         `json:"status"`
 }
