@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/fmo/hexagonal-blog/config"
 	"github.com/fmo/hexagonal-blog/internal/adapters/db/mysql"
+	"github.com/fmo/hexagonal-blog/internal/adapters/image/s3"
 	"github.com/fmo/hexagonal-blog/internal/adapters/rest"
 	"github.com/fmo/hexagonal-blog/internal/application/core/api"
 	"github.com/joho/godotenv"
@@ -32,7 +33,12 @@ func main() {
 		log.Fatalf("Failed to connect to database. Error: %v", err)
 	}
 
-	application := api.NewApplication(dbAdapter)
+	imageAdapter, err := s3.NewAdapter(config.GetAwsRegion(), config.GetS3Bucket())
+	if err != nil {
+		log.Fatalf("Failed to connect to aws. Error: %v", err)
+	}
+
+	application := api.NewApplication(dbAdapter, imageAdapter)
 	restAdapter := rest.NewAdapter(application, config.GetApplicationPort())
 	restAdapter.Run(ctx)
 }

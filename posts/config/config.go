@@ -25,6 +25,14 @@ func GetApplicationPort() int {
 	return port
 }
 
+func GetS3Bucket() string {
+	return os.Getenv("S3_BUCKET")
+}
+
+func GetAwsRegion() string {
+	return os.Getenv("AWS_REGION")
+}
+
 func getEnvironmentValue(key string) string {
 	if os.Getenv(key) == "" {
 		log.Fatalf("%s environment variable is missing.", key)
