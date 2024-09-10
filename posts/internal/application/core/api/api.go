@@ -25,7 +25,10 @@ func (a Application) SavePost(ctx context.Context, post domain.Post) (domain.Pos
 		return domain.Post{}, err
 	}
 
-	err = a.image.Upload(fmt.Sprintf("%d.png", post.ID))
+	err = a.image.Upload(
+		fmt.Sprintf("%d.png", post.ID),
+		"https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png",
+	)
 	if err != nil {
 		return domain.Post{}, err
 	}

@@ -29,12 +29,12 @@ func NewAdapter(awsRegion, s3Bucket string) (*Adapter, error) {
 	}, nil
 }
 
-func (a Adapter) Upload(imageName string) (err error) {
+func (a Adapter) Upload(imageName, imageUrl string) (err error) {
 	if a.checkImageAlreadyUploaded(imageName) == true {
 		return nil
 	}
 
-	resp, err := http.Get(imageName)
+	resp, err := http.Get(imageUrl)
 	if err != nil {
 		return err
 	}

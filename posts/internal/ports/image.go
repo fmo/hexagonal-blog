@@ -1,5 +1,5 @@
 package ports
 
 type ImagePort interface {
-	Upload(imageName string) error
+	Upload(imageName, imageUrl string) error
 }
