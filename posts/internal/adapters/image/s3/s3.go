@@ -30,10 +30,6 @@ func NewAdapter(awsRegion, s3Bucket string) (*Adapter, error) {
 }
 
 func (a Adapter) Upload(imageName, imageUrl string) (err error) {
-	if a.checkImageAlreadyUploaded(imageName) == true {
-		return nil
-	}
-
 	resp, err := http.Get(imageUrl)
 	if err != nil {
 		return err
@@ -57,7 +53,7 @@ func (a Adapter) Upload(imageName, imageUrl string) (err error) {
 	return nil
 }
 
-func (a Adapter) checkImageAlreadyUploaded(s3Key string) bool {
+func (a Adapter) CheckImageAlreadyUploaded(s3Key string) bool {
 	_, err := a.Session.HeadObject(&s3.HeadObjectInput{
 		Bucket: aws.String(a.s3Bucket),
 		Key:    aws.String(s3Key),
