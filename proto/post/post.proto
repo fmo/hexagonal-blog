@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option go_package = "github.com/fmo/hexagonal-blog/proto/post";
+
+message CreatePostRequest {
+  string title = 1;
+  string body = 2;
+}
+
+message CreatePostResponse {
+  int64 post_id = 1;
+}
+
+message GetPostRequest {
+  int64 post_id = 1;
+}
+
+message GetPostResponse {
+  string title = 1;
+  string body = 2;
+}
+
+service Post {
+  rpc Create(CreatePostRequest) returns (CreatePostResponse){}
+  rpc Get(GetPostRequest) returns (GetPostResponse){}
+}
