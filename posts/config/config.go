@@ -25,6 +25,17 @@ func GetApplicationPort() int {
 	return port
 }
 
+func GetGrpcPort() int {
+	portStr := getEnvironmentValue("GRPC_PORT")
+	port, err := strconv.Atoi(portStr)
+
+	if err != nil {
+		log.Fatalf("port: %s is invalid", portStr)
+	}
+
+	return port
+}
+
 func GetS3Bucket() string {
 	return os.Getenv("S3_BUCKET")
 }

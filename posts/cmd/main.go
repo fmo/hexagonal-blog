@@ -4,8 +4,8 @@ import (
 	"context"
 	"github.com/fmo/hexagonal-blog/config"
 	"github.com/fmo/hexagonal-blog/internal/adapters/db/mysql"
+	"github.com/fmo/hexagonal-blog/internal/adapters/grpc"
 	"github.com/fmo/hexagonal-blog/internal/adapters/image/s3"
-	"github.com/fmo/hexagonal-blog/internal/adapters/rest"
 	"github.com/fmo/hexagonal-blog/internal/application/core/api"
 	"github.com/joho/godotenv"
 	log "github.com/sirupsen/logrus"
@@ -39,6 +39,8 @@ func main() {
 	}
 
 	application := api.NewApplication(dbAdapter, imageAdapter)
-	restAdapter := rest.NewAdapter(application, config.GetApplicationPort())
-	restAdapter.Run(ctx)
+	//restAdapter := rest.NewAdapter(application, config.GetApplicationPort())
+	//restAdapter.Run(ctx)
+	grpcAdapter := grpc.NewAdapter(application, config.GetGrpcPort())
+	grpcAdapter.Run(ctx)
 }
